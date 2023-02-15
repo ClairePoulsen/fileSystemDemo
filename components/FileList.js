@@ -14,6 +14,10 @@ export default class FileList extends Component {
         this.grabListing(this.props.directoryUri);
     }
 
+    async componentDidUpdate() {
+        this.grabListing(this.props.directoryUri);
+    }
+
     grabListing = async (uri) => {
         const listing = await FileSystem.readDirectoryAsync(uri);
         this.setDirectoryListing(listing);
@@ -23,10 +27,6 @@ export default class FileList extends Component {
         this.setState({
             directoryListing: listing,
         })
-    }
-
-    async componentDidUpdate() {
-        this.grabListing(this.props.directoryUri);
     }
 
     async deleteFile(name, key) {
@@ -57,6 +57,7 @@ export default class FileList extends Component {
                         this.state.directoryListing.map(
                             (name, key) => (
                                 <Pressable
+                                    key={key}
                                     onPress={() => {this.showFile(name, key)}}
                                     onLongPress={() => {this.deleteFile(name, key)}}
                                 >
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderRadius: 5,
         margin: 5,
-        padding: 2,
+        padding: 5,
       },
   })
   
